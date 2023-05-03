@@ -1,0 +1,24 @@
+.header {
+  padding: 4px 12px;
+  .logo {
+    display: block;
+    font-size: 42px;
+    line-height: 42px;
+    color: #fff;
+    text-decoration: none;
+    margin-bottom: 20px;
+  }
+  .menu {
+    display: flex;
+    gap: 16px;
+    a {
+      color: #fff;
+      text-decoration: none;
+      transition: color .4s;
+      &:hover,
+      &:focus {
+        color: #F24E1E;
+      }
+    }
+  }
+}
