@@ -11,6 +11,7 @@ export const Header = () => {
       <nav className={style.menu}>
         <NavLink to='/'>Home</NavLink>
         <NavLink to='/catalog'>Catalog</NavLink>
+        <NavLink to='/catalog/add'>Catalog Add</NavLink>
       </nav>
     </header>
   )
