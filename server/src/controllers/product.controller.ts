@@ -35,9 +35,10 @@ export class ProductController {
       if (success) {
         Logger.info('Product has been created')
         res.status(200).json({success: true})
+      } else {
+        Logger.error('Error creating product')
+        res.status(500).json({error: 'Error creating product'})
       }
-      Logger.error('Error creating product')
-      res.status(500).json({error: 'Error creating product'})
     } catch (err) {
       Logger.error(`Error creating product: ${err}`)
       res.status(500).json('Server Error')
