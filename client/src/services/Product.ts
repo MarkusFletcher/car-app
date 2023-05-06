@@ -25,7 +25,7 @@ export class ProductAPI {
 
   static async create(data: IProductData): Promise<boolean> {
     try {
-      // axios.post()
+      axios.post(`${this.BASE_URL}/create`, data)
       return true
     }
     catch {

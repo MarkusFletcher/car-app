@@ -5,14 +5,17 @@
 	.field {
 		margin-bottom: 20px;
 		label {
-			display: block;
+			display: flex;
+			justify-content: space-between;
 			margin-bottom: 6px;
 		}
 		input[type="text"],
-		textarea {
+		textarea,
+		select {
 			display: block;
 			width: 100%;
 			padding: 8px 16px;
+			font-family: inherit;
 			font-size: 16px;
 			&:hover,
 			&:focus {
@@ -23,11 +26,17 @@
 			min-height: 60px;
 			max-height: 200px;
 		}
+		.error {
+			font-size: 13px;
+			padding: 4px;
+			background-color: #F24E1E;
+		}
 	}
 	.button {
 		display: block;
 		width: 100%;
 		padding: 8px 16px;
+		font-family: inherit;
 		font-size: 16px;
 		cursor: pointer;
 		background-color: #fff;
