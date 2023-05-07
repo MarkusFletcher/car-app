@@ -1,10 +1,10 @@
 export interface IUser {
     id: string,
-    nickname: string,
-    password: string,
-    role: 'admin' | 'user'
+    email: string,
+    login: string,
+    password: string
   }
   
-export interface IUserData extends Omit<IUser, 'id'> {
+export interface IUserData extends Omit<IUser, 'id'> {}
 
-}
+export interface IUserDataErrors extends Partial<{[key in keyof IUserData]: string}> {}
