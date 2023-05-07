@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { ProductAPI } from '../services/Product'
 import { ProductAdd } from '../components/product-add'
