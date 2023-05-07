@@ -1,10 +1,13 @@
 import React, { ReactElement, useState, useMemo } from 'react'
 import style from './ProductAdd.module.scss'
-import { Button } from '../ui/button'
+import { FormField } from '../ui/form-field'
+import { InputText } from '../ui/input-text'
+import { Textarea } from '../ui/textarea'
+import { Select } from '../ui/select'
 
 import { IProductData, IProductDataErrors } from '../../types/product.interface'
 
-const defaulProductData: IProductData = {
+const defaultProductData: IProductData = {
   brand: '',
   model: '',
   year: 2023,
@@ -13,7 +16,7 @@ const defaulProductData: IProductData = {
 }
 
 export const ProductAdd: React.FC<{createProduct: Function}> = ({createProduct}): ReactElement => {
-  const [productData, setProductData] = useState<IProductData>(defaulProductData)
+  const [productData, setProductData] = useState<IProductData>(defaultProductData)
   const [productErrors, setProductErrors] = useState<IProductDataErrors>({})
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void => {
@@ -26,7 +29,7 @@ export const ProductAdd: React.FC<{createProduct: Function}> = ({createProduct})
     e.preventDefault()
     if (isValidData()) {
       createProduct(productData)
-        .then(() => setProductData(defaulProductData))
+        .then(() => setProductData(defaultProductData))
     }
   }
 
@@ -41,49 +44,31 @@ export const ProductAdd: React.FC<{createProduct: Function}> = ({createProduct})
 
   return (
     <form className={style.form} onSubmit={handleSubmit}>
-      <div className={style.field}>
-        <label htmlFor="brand">
-          <span>Brand</span>
-          {productErrors.brand ? <span className={style.error}>{productErrors.brand}</span> : ''}
-        </label>
-        <input id="brand" name="brand" type="text" value={productData.brand} onChange={handleInputChange} required/>
-      </div>
-
-      <div className={style.field}>
-        <label htmlFor="model">
-          <span>Model</span>
-          {productErrors.model ? <span className={style.error}>{productErrors.model}</span> : ''}
-        </label>
-        <input id="model" name="model" type="text" value={productData.model} onChange={handleInputChange} required/>
-      </div>
-
-      <div className={style.field}>
-        <label htmlFor="year">
-          <span>Year</span>
-          {productErrors.year ? <span className={style.error}>{productErrors.year}</span> : ''}
-        </label>
-        <select id="year" name="year" value={productData.year.toString()} onChange={handleInputChange} required>
-          {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map(year => (
-            <option key={year} value={year.toString()}>{year}</option>
-          ))}
-        </select>
-      </div>
-
-      <div className={style.field}>
-        <label htmlFor="description">
-          <span>Description</span>
-          {productErrors.description ? <span className={style.error}>{productErrors.description}</span> : ''}
-        </label>
-        <textarea id="description" name="description" value={productData.description} onChange={handleInputChange} required></textarea>
-      </div>
-
-      <div className={style.field}>
-        <label htmlFor="imgUrl">
-          <span>Image URL</span>
-          {productErrors.imgUrl ? <span className={style.error}>{productErrors.imgUrl}</span> : ''}
-        </label>
-        <input id="imgUrl" name="imgUrl" type="text" value={productData.imgUrl} onChange={handleInputChange} required/>
-      </div>
+      <FormField label="Brand" forId='brand' error={productErrors.brand}>
+        <InputText id="brand" name="brand" value={productData.brand} onChange={handleInputChange} required/>
+      </FormField>
+      <FormField label="Model" forId='model' error={productErrors.model}>
+        <InputText id="model" name="model" value={productData.model} onChange={handleInputChange} required/>
+      </FormField>
+      <FormField label="Year" forId='year' error={productErrors.year}>
+        <Select
+          id="year"
+          name="year"
+          value={productData.year.toString()} options={
+            Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map(year => ({
+              key: year,
+              value: year,
+              name: year
+            }))}
+          onChange={handleInputChange}
+        />
+      </FormField>
+      <FormField label="Description" forId='description' error={productErrors.description}>
+        <Textarea id="description" name="description" value={productData.description} onChange={handleInputChange}/>
+      </FormField>
+      <FormField label="Image URL" forId='imgUrl' error={productErrors.imgUrl}>
+        <InputText id="imgUrl" name="imgUrl" value={productData.imgUrl} onChange={handleInputChange} required/>
+      </FormField>
 
       <button className={style.button} type="submit" onClick={isValidData}>Save</button>
     </form>
