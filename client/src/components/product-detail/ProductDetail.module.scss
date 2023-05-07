@@ -1,6 +1,11 @@
-.card {
+.detail {
   // max-width: 500px;
-  .top {
+  .content {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 40px;
+  }
+  .media {
     margin-bottom: 10px;
   }
   .info {
@@ -9,6 +14,10 @@
   .brand {
     font-size: 24px;
     margin-bottom: 8px;
+  }
+  .description {
+    margin-top: 20px;
+    line-height: 1.2;
   }
   .back {
     display: inline-flex;
