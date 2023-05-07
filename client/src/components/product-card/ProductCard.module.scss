@@ -1,7 +1,15 @@
 .card {
   // max-width: 500px;
+  display: flex;
+  flex-direction: column;
   .top {
     margin-bottom: 10px;
+    flex: 1 0 66%;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
   }
   .info {
     margin-bottom: 16px;
