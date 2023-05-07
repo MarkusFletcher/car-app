@@ -25,7 +25,7 @@ const PORT = process.env.PORT || 3000
 const start = async() => {
   try {
     app.listen(PORT, () => {
-      Logger.info(`Server listening on port ${PORT}`)
+      console.log(`Server listening on port ${PORT}`)
     })
   } catch (err) {
     Logger.error(err)

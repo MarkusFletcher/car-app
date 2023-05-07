@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 import bcrypt from 'bcrypt'
 import { Logger } from '../utils/Logger'
 
-import { IUser, IUserData } from '../types/user.interface'
+import { IUser, IUserData, IUserLoginData } from '../types/user.interface'
 import { ITokens } from '../types/token.interface'
 
 import { userModel } from '../models/user.model'
@@ -15,7 +15,7 @@ import { UserDto } from '../dtos/user.dto'
 
 
 export class UserService {
-  static async registration(userData: IUserData): Promise<{tokens: ITokens, user: UserDto}> {
+  static async registration(userData: IUserData): Promise<{tokens: ITokens, userDto: UserDto}> {
     try {
       const candidate: IUser = await userModel.findOne({email: userData.email})
       if (candidate) {
@@ -26,7 +26,7 @@ export class UserService {
       const hashPassword = await bcrypt.hash(userData.password, 3)
       const user: IUser = {
         id: uuidv4(),
-        nickname: userData.nickname,
+        login: userData.login,
         email: userData.email,
         password: hashPassword,
         isActivated: false,
@@ -49,13 +49,47 @@ export class UserService {
             accessToken,
             refreshToken
           },
-          user
+          userDto
         }
       }
       Logger.error('Error creating user')
       throw new Error('Error creating user')
     } catch (err) {
       Logger.error(`Error creating user: ${err}`)
+      throw new Error(err)
+    }
+  }
+
+  static async login(userLoginData: IUserLoginData): Promise<{tokens: ITokens, userDto: UserDto}> {
+    try {
+      const user = await userModel.findOne({login: userLoginData.login})
+      if (!user) {
+        Logger.error('User not found')
+        throw new Error('User not found')
+      }
+      const isEqualPassword = await bcrypt.compare(userLoginData.password, user.password)
+      if (!isEqualPassword) {
+        Logger.error('Wrong password')
+        throw new Error('Wrong password')
+      }
+      const userDto: UserDto = new UserDto(user)
+      const accessToken = TokenService.generateAccessToken(userDto)
+      const refreshToken = TokenService.generateRefreshToken(userDto)
+      tokenModel.create({
+        id: uuidv4(),
+        userId: user.id,
+        refreshToken: refreshToken
+      })
+      return {
+        tokens: {
+          accessToken,
+          refreshToken
+        },
+        userDto
+      }
+      
+    } catch (err) {
+      Logger.error(`Error user login: ${err}`)
       throw new Error(err)
     }
   }

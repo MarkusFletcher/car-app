@@ -1,12 +1,12 @@
 export interface IUserData {
-  nickname: string,
+  login: string,
   email: string,
   password: string
 }
 
 export interface IUserDTO {
   id: string,
-  nickname: string,
+  login: string,
   email: string
 }
 export interface IUser extends IUserData {
@@ -14,3 +14,5 @@ export interface IUser extends IUserData {
   isActivated: boolean,
   activationLink: string
 }
+
+export interface IUserLoginData extends Omit<IUserData, 'email'> {}

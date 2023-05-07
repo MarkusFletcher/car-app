@@ -8,7 +8,7 @@ userRouter.post('/registration',
     body('email').isEmail().withMessage('Invalid email'),
     body('password').isLength({min: 5, max: 32}).withMessage('Invalid password'),
     UserController.registration)
-userRouter.post('/login')
+userRouter.post('/login', UserController.login)
 userRouter.post('/logout')
 userRouter.get('/activate/:link')
 userRouter.get('/refresh')
