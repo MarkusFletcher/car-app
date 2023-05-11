@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '@/api'
 
 import { IUser, IUserData } from '../types/user.interface'
 
@@ -7,7 +7,7 @@ export class UserAPI {
 
   static async getAll(): Promise<IUser[]> {
     try {
-      const { data } = await axios.get(this.BASE_URL)
+      const { data } = await api.get(this.BASE_URL)
       return data
     } catch(err) {
       throw err
@@ -16,7 +16,7 @@ export class UserAPI {
 
   static async getById(id: string): Promise<IUser> {
     try {
-      const { data } = await axios.get(`${this.BASE_URL}/${id}`)
+      const { data } = await api.get(`${this.BASE_URL}/${id}`)
       return data
     } catch(err) {
       throw err
@@ -25,7 +25,7 @@ export class UserAPI {
 
   static async create(data: IUserData): Promise<boolean> {
     try {
-      axios.post(`${this.BASE_URL}/registration`, data)
+      api.post(`${this.BASE_URL}/registration`, data)
       return true
     }
     catch {
