@@ -8,7 +8,7 @@ import { UserDto } from '../dtos/user.dto'
 
 interface IUserResponseData {
   tokens: ITokens,
-  userDto: UserDto
+  user: UserDto
 }
 
 export class UserController {

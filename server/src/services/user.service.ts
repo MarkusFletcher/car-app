@@ -49,7 +49,7 @@ export class UserService {
             accessToken,
             refreshToken
           },
-          userDto
+          user: userDto
         }
       }
       Logger.error('Error creating user')
@@ -60,7 +60,7 @@ export class UserService {
     }
   }
 
-  static async login(userLoginData: IUserLoginData): Promise<{tokens: ITokens, userDto: UserDto}> {
+  static async login(userLoginData: IUserLoginData): Promise<{tokens: ITokens, user: UserDto}> {
     try {
       const user = await userModel.findOne({login: userLoginData.login})
       if (!user) {
@@ -85,7 +85,7 @@ export class UserService {
           accessToken,
           refreshToken
         },
-        userDto
+        user: userDto
       }
       
     } catch (err) {

@@ -1,8 +1,10 @@
 import api from '@/api'
 
+import { AxiosResponse } from 'axios'
 import { IUser, IUserData } from '../types/user.interface'
+import { IAuthResponse } from '../types/response/auth.inteface'
 
-export class UserAPI {
+export class UserService {
   private static readonly BASE_URL = 'http://localhost:3001/api/user'
 
   static async getAll(): Promise<IUser[]> {
@@ -23,10 +25,9 @@ export class UserAPI {
     }
   }
 
-  static async create(data: IUserData): Promise<boolean> {
+  static async registration(data: IUserData): Promise<AxiosResponse<IAuthResponse> | false> {
     try {
-      api.post(`${this.BASE_URL}/registration`, data)
-      return true
+      return api.post(`${this.BASE_URL}/registration`, data)
     }
     catch {
       return false

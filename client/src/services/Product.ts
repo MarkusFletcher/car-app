@@ -2,7 +2,7 @@ import api from '@/api'
 
 import { IProduct, IProductData } from '../types/product.interface'
 
-export class ProductAPI {
+export class ProductService {
   private static readonly BASE_URL = 'http://localhost:3001/api/products'
 
   static async getAll(): Promise<IProduct[]> {

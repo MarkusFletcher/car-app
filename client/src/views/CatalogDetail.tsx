@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { ProductDetail } from '../components/product-detail'
-import { ProductAPI } from '../services/Product'
+import { ProductService } from '../services/Product'
 import { IProduct } from '../types/product.interface'
 
 type Params = {
@@ -16,7 +16,7 @@ export const CatalogDetail: React.FC = (): ReactElement => {
   //https://stackoverflow.com/questions/69993011/how-to-specify-the-result-type-of-useparams-with-react-router-v6
   
   useEffect(() => {
-    ProductAPI.getById(id).then(res => {
+    ProductService.getById(id).then(res => {
       setProduct(res)
     })
   }, [])
